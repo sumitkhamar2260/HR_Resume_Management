@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "678064592974",
+    "firebase_url": "https://hr-resume-management.firebaseio.com",
+    "project_id": "hr-resume-management",
+    "storage_bucket": "hr-resume-management.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678064592974:android:0770ca701bcf4f591a4b1f",
+        "android_client_info": {
+          "package_name": "com.example.applyforjobs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "678064592974-oqjhnv1t0jq1loc4bi6n8ja5pffer1v3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZzgR7Sm7I-esSKqqEKvTdCZVd0DKFGk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "678064592974-oqjhnv1t0jq1loc4bi6n8ja5pffer1v3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678064592974:android:2e47576bce1578371a4b1f",
+        "android_client_info": {
+          "package_name": "com.example.hrresumemanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "678064592974-oqjhnv1t0jq1loc4bi6n8ja5pffer1v3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZzgR7Sm7I-esSKqqEKvTdCZVd0DKFGk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "678064592974-oqjhnv1t0jq1loc4bi6n8ja5pffer1v3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
