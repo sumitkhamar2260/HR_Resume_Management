@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HR Resume Management</string>
+    <string name="title_activity_job_openings">JobOpenings</string>
 </resources>
