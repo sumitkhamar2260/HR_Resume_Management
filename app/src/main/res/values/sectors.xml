@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sectors">
+        <item>AGRICULTURE AND ALLIED INDUSTRIES</item>
+        <item>AUTOMOBILES</item>
+        <item>AUTO COMPONENTS</item>
+        <item>AVIATION</item>
+        <item>BANKING</item>
+        <item>CEMENT</item>
+        <item>CONSUMER DURABLES</item>
+        <item>ECOMMERCE</item>
+        <item>EDUCATION AND TRAINING</item>
+        <item>ENGINEERING AND CAPITAL GOODS</item>
+        <item>FINANCIAL SERVICES</item>
+        <item>FMCG</item>
+        <item>GEMS AND JEWELLERY</item>
+        <item>HEALTHCARE</item>
+        <item>INFRASTRUCTURE</item>
+        <item>INSURANCE</item>
+        <item>IT and Development</item>
+        <item>MANUFACTURING</item>
+        <item>MEDIA AND ENTERTAINMENT</item>
+        <item>METALS AND MINING</item>
+        <item>OIL AND GAS</item>
+        <item>PHARMACEUTICALS</item>
+        <item>PORTS</item>
+        <item>POWER</item>
+        <item>RAILWAYS</item>
+        <item>REAL ESTATE</item>
+        <item>RENEWABLE ENERGY</item>
+        <item>RETAIL</item>
+        <item>ROADS</item>
+        <item>SCIENCE AND TECHNOLOGY</item>
+        <item>SERVICES</item>
+        <item>STEEL</item>
+        <item>TELECOMMUNICATIONS</item>
+        <item>TEXTILES</item>
+        <item>TOURISM AND HOSPITALITY</item>
+        <item>OTHER</item>
+    </string-array>
+
+</resources>
