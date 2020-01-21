@@ -4,14 +4,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class JobOpenings extends AppCompatActivity {
-
+    ArrayList<String> jobtitle,location,applications;
+    RecyclerView rv;
+    FirebaseAuth firebaseAuth;
+    FirebaseDatabase fd;
+    DatabaseReference ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +44,39 @@ public class JobOpenings extends AppCompatActivity {
                 startActivity(new Intent(JobOpenings.this,job_details.class));
             }
         });
+        rv=findViewById(R.id.rv);
+        jobtitle=new ArrayList<>();
+        location=new ArrayList<>();
+        applications=new ArrayList<>();
+        firebaseAuth=FirebaseAuth.getInstance();
+        fd=FirebaseDatabase.getInstance();
+        ref=fd.getReference("Companies").child(firebaseAuth.getCurrentUser().getUid()).child("Job Openings");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot jobdetails:dataSnapshot.getChildren()){
+                    Map<String,String> ob=(Map) jobdetails.getValue();
+                    jobtitle.add( String.valueOf(ob.get("JobTitle")));
+                    System.out.println("Job title is "+ob.get("JobTitle"));
+                    location.add( String.valueOf(ob.get("Location")));
+                    applications.add("1");
+                }
+                RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getApplicationContext());
+                rv.setLayoutManager(layoutManager);
+                jobdetailrow ob=new jobdetailrow(getApplicationContext(),jobtitle,location,applications);
+                rv.setAdapter(ob);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println(databaseError);
+
+            }
+        });
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getApplicationContext());
+        rv.setLayoutManager(layoutManager);
+        jobdetailrow ob=new jobdetailrow(getApplicationContext(),jobtitle,location,applications);
+        rv.setAdapter(ob);
     }
 
 }
