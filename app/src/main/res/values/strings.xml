@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">HR Resume Management</string>
     <string name="title_activity_job_openings">JobOpenings</string>
+    <string-array name="skillset">
+        <item>Html</item>
+        <item>Css</item>
+        <item>Android</item>
+        <item>Dart</item>
+        <item>Ios</item>
+        <item>Jquery</item>
+        <item>Python</item>
+        <item>Java</item>
+        <item>C++</item>
+        <item>C</item>
+        <item>Operating systems</item>
+    </string-array>
 </resources>

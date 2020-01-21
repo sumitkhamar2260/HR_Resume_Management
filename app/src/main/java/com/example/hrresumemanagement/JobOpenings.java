@@ -1,5 +1,6 @@
 package com.example.hrresumemanagement;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -22,8 +23,9 @@ public class JobOpenings extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                  //      .setAction("Action", null).show();
+                startActivity(new Intent(JobOpenings.this,job_details.class));
             }
         });
     }
