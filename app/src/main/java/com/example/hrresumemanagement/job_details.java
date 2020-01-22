@@ -103,6 +103,8 @@ public class job_details extends AppCompatActivity {
                     jobdetail.put("Experience",experince_string);
                     jobdetail.put("Location",location_string);
                     jobdetail.put("Salary",salary_string);
+                    jobdetail.put("JobId","JobId"+jobid);
+                    jobdetail.put("Companyid",firebaseAuth.getCurrentUser().getUid());
                     ref.child("Job Openings").child("JobId"+jobid).setValue(jobdetail);
                     if(skillmap.size()>0) {
                         ref = FirebaseDatabase.getInstance().getReference().child("Companies").child(firebaseAuth.getCurrentUser().getUid()).child("Job Openings").child("JobId" + jobid);
