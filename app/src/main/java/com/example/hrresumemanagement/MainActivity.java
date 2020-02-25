@@ -28,12 +28,12 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        /*firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if(firebaseUser!=null){
             Intent i = new Intent(MainActivity.this, JobOpenings.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
-        }
+        }*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         signup=findViewById(R.id.signup);

@@ -66,6 +66,7 @@ public class job_details extends AppCompatActivity {
         parentLinearLayout = findViewById(R.id.parent_linear_layout2);
         savejobdetailbtn=findViewById(R.id.savejobdetailbtn);
         Resources res = getResources();
+
         skills = new ArrayList<>(Arrays.asList(res.getStringArray(R.array.skillset)));
         skilladapter =
                 new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, skills);
@@ -115,8 +116,21 @@ public class job_details extends AppCompatActivity {
     }
 
     public void onAddskill() {
+        skillslay.setError("");
         String skill1=skill.getText().toString().trim();
         if(skills.contains(skill1)) {
+            for (String ele : skills) {
+                if (ele.equals(skill.getText().toString().trim())) {
+                    tv = new TextView(this);
+                    mcard = new MaterialCardView(this);
+                    mcard.setId(++count);
+                    tv.setId(++count);
+                    tv.setText(skill.getText());
+                    mcard.addView(tv);
+                    mcard.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    parentLinearLayout.addView(mcard);
+                }
+            }
             skillmap.put("skill"+i,skill1);
             skills.remove(skill1);
             skilladapter =
@@ -130,8 +144,8 @@ public class job_details extends AppCompatActivity {
 
 
 
-        for (String ele : skills) {
-            if (ele.equals(skill.getText().toString())) {
+        /*for (String ele : skills) {
+            if (ele.equals(skill.getText().toString().trim())) {
                 tv = new TextView(this);
                 mcard = new MaterialCardView(this);
                 mcard.setId(++count);
@@ -141,7 +155,12 @@ public class job_details extends AppCompatActivity {
                 mcard.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 parentLinearLayout.addView(mcard);
             }
-        }
+        }*/
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(job_details.this,JobOpenings.class));
     }
 }
 
