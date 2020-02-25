@@ -54,6 +54,9 @@ public class JobOpenings extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                jobtitle.clear();
+                location.clear();
+                applications.clear();
                 for (DataSnapshot jobdetails:dataSnapshot.getChildren()){
                     Map<String,String> ob=(Map) jobdetails.getValue();
                     jobtitle.add( String.valueOf(ob.get("JobTitle")));
