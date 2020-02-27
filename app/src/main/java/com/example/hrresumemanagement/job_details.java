@@ -1,7 +1,5 @@
 package com.example.hrresumemanagement;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -11,6 +9,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
@@ -19,9 +19,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,6 +97,9 @@ public class job_details extends AppCompatActivity {
                 }
                 else if(salary_string.isEmpty()){
                     salarylay.setError("Enter salary range");
+                }
+                else if(skills.isEmpty()){
+                    skill.setError("Please Enter Skill");
                 }
                 else{
                     Map<Object,String > jobdetail=new HashMap<>();
