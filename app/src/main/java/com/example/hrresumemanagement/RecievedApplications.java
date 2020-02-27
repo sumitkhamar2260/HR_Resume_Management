@@ -69,7 +69,7 @@ public class RecievedApplications extends AppCompatActivity {
                         testScore.clear();
                         for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                             fetch = (Map)dataSnapshot1.getValue();
-                            for_sort.put(Double.parseDouble(fetch.get("Resume Score")),String.valueOf(fetch.get("uid")));
+                            for_sort.put(Double.valueOf(String.valueOf(fetch.get("Resume Score"))),String.valueOf(fetch.get("uid")));
                             testScore.add(fetch.get("Score"));
                         }
                         sort(for_sort);

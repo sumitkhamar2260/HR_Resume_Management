@@ -50,16 +50,15 @@ public class ShowResume extends AppCompatActivity {
         databaseReference.child("users").child(uid).child("Personal details").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot details : dataSnapshot.getChildren()){
-                    Map<String,String> map = (Map)details.getValue();
-                    mobile = map.get("Mobile No");
-                    email = map.get("Email");
-                    city = map.get("City");
-                    state = map.get("State");
-                    name_t.setText(name);
-                    email_t.setText(email);
-                    city_state.setText(city+","+state);
-                }
+                Map<String,String> map = (Map)dataSnapshot.getValue();
+                mobile = map.get("Mobile No");
+                email = map.get("Email");
+                city = map.get("City");
+                state = map.get("State");
+                name_t.setText(name);
+                email_t.setText(email);
+                city_state.setText(city+","+state);
+
             }
 
             @Override
