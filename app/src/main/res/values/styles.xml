@@ -9,6 +9,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="textInputStyle">@style/AppTextField</item>
     </style>
+
     <style name="AppTheme1" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -16,6 +17,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="textInputStyle">@style/AppTextField</item>
     </style>
+
     <style name="AppTextField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintTextColor">@color/colorAccent</item>
         <item name="boxBackgroundColor">@android:color/white</item>

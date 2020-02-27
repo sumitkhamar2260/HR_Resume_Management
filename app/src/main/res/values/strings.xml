@@ -14,4 +14,6 @@
         <item>C</item>
         <item>Operating systems</item>
     </string-array>
+    <string name="title_activity_recieved_applications">RecievedApplications</string>
+    <string name="title_activity_show_resume">ShowResume</string>
 </resources>

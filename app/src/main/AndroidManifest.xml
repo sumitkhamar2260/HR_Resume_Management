@@ -9,17 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".job_details"></activity>
+        <activity
+            android:name=".ShowResume"
+            android:label="@string/title_activity_show_resume"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".RecievedApplications"
+            android:label="@string/title_activity_recieved_applications"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".job_details" />
         <activity
             android:name=".JobOpenings"
             android:label="Job Openings"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SignUp" />
-        <activity android:name=".MainActivity"><intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
