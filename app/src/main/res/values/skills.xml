@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="skills">
+        <item>Html</item>
+        <item>Css</item>
+        <item>Android</item>
+        <item>Dart</item>
+        <item>Ios</item>
+        <item>Jquery</item>
+        <item>Matplotlib</item>
+        <item>Python</item>
+        <item>Java</item>
+        <item>C++</item>
+        <item>C</item>
+        <item>Operating systems</item>
+    </string-array>
+</resources>
