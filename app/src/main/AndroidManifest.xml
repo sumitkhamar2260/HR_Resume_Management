@@ -12,7 +12,11 @@
         <activity
             android:name=".ShowResume"
             android:label="@string/title_activity_show_resume"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"><intent-filter>
+            <action android:name="android.intent.action.SEND"/>
+
+            <data android:mimeType="message/rfc822"/></intent-filter>
+        </activity>
         <activity
             android:name=".RecievedApplications"
             android:label="@string/title_activity_recieved_applications"
@@ -35,5 +39,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 </manifest>

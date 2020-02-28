@@ -3,37 +3,47 @@ package com.example.hrresumemanagement;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
 public class ShowResume extends AppCompatActivity {
     Intent intent;
-    String name,uid,mobile,email,city,state;
-    ArrayList<String> c_name,c_location,j_title,s_date,e_date,degree,fieldOfStudy,skills;
+    String name,uid,mobile,email,city,state,degree,fieldOfStudy;
+    ArrayList<String> c_name,c_location,j_title,s_date,e_date;
     DatabaseReference databaseReference;
-    TextView name_t,email_t,mobile_t,city_state,skill,education,experience;
-    ProgressDialog progressDialog;
+    TextView name_t,email_t,mobile_t,city_state,skill,education;
+    Button dpdf,sendemail;
+    FirebaseStorage storage;
+    StorageReference storageRef,islandRef;
+    ProgressDialog pDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_resume);
-       /* ProgressBar progressBar = new ProgressBar(this);
-        progressBar.setVisibility(View.VISIBLE);
-       */
-        progressDialog = new ProgressDialog(ShowResume.this);
-        progressDialog.setMessage("Loading");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         intent = getIntent();
@@ -44,25 +54,72 @@ public class ShowResume extends AppCompatActivity {
         j_title = new ArrayList<>();
         s_date = new ArrayList<>();
         e_date = new ArrayList<>();
+        sendemail=findViewById(R.id.sendemail);
         name_t = findViewById(R.id.name);
         email_t = findViewById(R.id.email);
         mobile_t = findViewById(R.id.mobile);
         city_state = findViewById(R.id.city_state);
         skill = findViewById(R.id.skill);
-        skills = new ArrayList<>();
         education = findViewById(R.id.education);
-        experience = findViewById(R.id.experience);
-        degree = new ArrayList<>();
-        fieldOfStudy = new ArrayList<>();
+        dpdf=findViewById(R.id.download);
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        progressDialog.show();
         retrievePersonalDetails();
-        retrieveEducationalDetails();
-        retrieveExperienceDetails();
-        retrieveSkillDetails();
-        progressDialog.dismiss();
-       // progressBar.setVisibility(View.GONE);
+        dpdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              downloadFile();
+            }
+        });
+        sendemail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendhireemail();
+            }
+        });
     }
+
+    private void sendhireemail() {
+
+        Intent it = new Intent(Intent.ACTION_SEND);
+        it.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+        it.putExtra(Intent.EXTRA_SUBJECT, "calling for interview");
+        it.setType("message/rfc822");
+        startActivity(Intent.createChooser(it,"Choose Mail App"));
+    }
+
+    private void downloadFile() {
+        pDialog = new ProgressDialog(ShowResume.this);
+        pDialog.setMessage("loading..");
+        pDialog.show();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://hr-resume-management.appspot.com/Uploads");
+        StorageReference  islandRef = storageRef.child(uid);
+
+        File rootPath = new File(Environment.getExternalStorageDirectory(),"documents");
+        if(!rootPath.exists()) {
+            rootPath.mkdirs();
+        }
+
+        final File localFile = new File(rootPath, String.format("%s.pdf", name));
+
+        islandRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                  pDialog.dismiss();
+                Toast.makeText(ShowResume.this, String.format(";local tem file created  created %s",localFile.toString()) , Toast.LENGTH_SHORT).show();
+                //  updateDb(timestamp,localFile.toString(),position);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                pDialog.dismiss();
+                Log.e("firebase ",";local tem file not created  created " +exception.toString());
+            }
+        });
+    }
+
     public void retrievePersonalDetails(){
         databaseReference.child("users").child(uid).child("Personal details").addValueEventListener(new ValueEventListener() {
             @Override
@@ -72,10 +129,11 @@ public class ShowResume extends AppCompatActivity {
                 email = map.get("Email");
                 city = map.get("City");
                 state = map.get("State");
+                mobile_t.setText(mobile);
                 name_t.setText(name);
                 email_t.setText(email);
-                mobile_t.setText(mobile);
                 city_state.setText(city+","+state);
+
             }
 
             @Override
@@ -88,18 +146,14 @@ public class ShowResume extends AppCompatActivity {
         databaseReference.child("users").child(uid).child("Education").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot details : dataSnapshot.getChildren()) {
-                    //for (DataSnapshot details1 : details.getChildren()) {
-                        Map<String, String> map = (Map) details.getValue();
-                        degree.add( map.get("Degree"));
-                        fieldOfStudy.add( map.get("Field Of Study"));
-
-                    //}
-                }
-                for (int i = 0;i<degree.size();i++){
-                    education.append(degree.get(i)+" in " +fieldOfStudy.get(i)+"\n");
-                }
+                /*for(DataSnapshot details : dataSnapshot.getChildren()){
+                    for(DataSnapshot details1 : da)
+                    Map<String,String> map = (Map)details.getValue();
+                    degree = map.get("Degree");
+                    fieldOfStudy = map.get("Field Of Study");
+                }*/
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -107,7 +161,7 @@ public class ShowResume extends AppCompatActivity {
         });
     }
     public void retrieveExperienceDetails(){
-        databaseReference.child("users").child(uid).child("Experience").child(uid).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("users").child(uid).child("Experience").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot details : dataSnapshot.getChildren()){
@@ -117,26 +171,6 @@ public class ShowResume extends AppCompatActivity {
                     j_title.add(map.get("Job Title"));
                     s_date.add(map.get("Start Date"));
                     e_date.add(map.get("End Date"));
-                    System.out.println(c_name);
-                }
-                for(int i =0;i<c_name.size();i++){
-                    experience.append(j_title.get(i)+"\n"+c_name.get(i)+"\n"+s_date.get(i)+" - "+e_date.get(i)+"\n");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-    public void retrieveSkillDetails(){
-        databaseReference.child("users").child(uid).child("Skills").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Map<String,String> map = (Map)dataSnapshot.getValue();
-                for(int i = 1;i<dataSnapshot.getChildrenCount();i++){
-                    skill.append(map.get("Skill "+i)+"\n");
                 }
             }
 

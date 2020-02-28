@@ -44,6 +44,7 @@ public class job_details extends AppCompatActivity {
     DatabaseReference ref;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

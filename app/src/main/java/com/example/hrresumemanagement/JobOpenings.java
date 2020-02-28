@@ -1,5 +1,6 @@
 package com.example.hrresumemanagement;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,12 +28,14 @@ public class JobOpenings extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseDatabase fd;
     DatabaseReference ref;
+    ProgressDialog pDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_openings);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         FloatingActionButton new_recruitment = findViewById(R.id.new_recruitment);
         new_recruitment.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +53,10 @@ public class JobOpenings extends AppCompatActivity {
         jobID = new ArrayList<>();
         firebaseAuth=FirebaseAuth.getInstance();
         fd=FirebaseDatabase.getInstance();
+        pDialog = new ProgressDialog(JobOpenings.this);
+        pDialog.setMessage("loading..");
+        pDialog.show();
+
         ref=fd.getReference("Companies").child(firebaseAuth.getCurrentUser().getUid()).child("Job Openings");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -65,6 +72,7 @@ public class JobOpenings extends AppCompatActivity {
                     applications.add(String.valueOf(jobdetails.child("Applicants").getChildrenCount()));
                     jobID.add(String.valueOf(ob.get("JobId")));
                 }
+                pDialog.dismiss();
                 RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getApplicationContext());
                 rv.setLayoutManager(layoutManager);
                 jobdetailrow ob=new jobdetailrow(getApplicationContext(),jobtitle,location,applications,jobID);
