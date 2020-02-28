@@ -68,7 +68,7 @@ public class job_details extends AppCompatActivity {
         savejobdetailbtn=findViewById(R.id.savejobdetailbtn);
         Resources res = getResources();
 
-        skills = new ArrayList<>(Arrays.asList(res.getStringArray(R.array.skillset)));
+        skills = new ArrayList<>(Arrays.asList(res.getStringArray(R.array.skills)));
         skilladapter =
                 new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, skills);
         skill.setThreshold(1);

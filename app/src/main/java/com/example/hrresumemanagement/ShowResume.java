@@ -16,7 +16,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,10 +31,10 @@ import java.util.Map;
 
 public class ShowResume extends AppCompatActivity {
     Intent intent;
-    String name,uid,mobile,email,city,state,degree,fieldOfStudy;
-    ArrayList<String> c_name,c_location,j_title,s_date,e_date;
+    String name,uid,mobile,email,city,state;
+    ArrayList<String> c_name,c_location,j_title,s_date,e_date,degree,fieldOfStudy;
     DatabaseReference databaseReference;
-    TextView name_t,email_t,mobile_t,city_state,skill,education;
+    TextView name_t,email_t,mobile_t,city_state,skill,education,experience;
     Button dpdf,sendemail;
     FirebaseStorage storage;
     StorageReference storageRef,islandRef;
@@ -54,6 +53,8 @@ public class ShowResume extends AppCompatActivity {
         j_title = new ArrayList<>();
         s_date = new ArrayList<>();
         e_date = new ArrayList<>();
+        degree = new ArrayList<>();
+        fieldOfStudy = new ArrayList<>();
         sendemail=findViewById(R.id.sendemail);
         name_t = findViewById(R.id.name);
         email_t = findViewById(R.id.email);
@@ -61,9 +62,13 @@ public class ShowResume extends AppCompatActivity {
         city_state = findViewById(R.id.city_state);
         skill = findViewById(R.id.skill);
         education = findViewById(R.id.education);
+        experience = findViewById(R.id.experience);
         dpdf=findViewById(R.id.download);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         retrievePersonalDetails();
+        retrieveExperienceDetails();
+        retrieveEducationalDetails();
+        retrieveSkillDetails();
         dpdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,18 +147,23 @@ public class ShowResume extends AppCompatActivity {
             }
         });
     }
+
     public void retrieveEducationalDetails(){
         databaseReference.child("users").child(uid).child("Education").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                /*for(DataSnapshot details : dataSnapshot.getChildren()){
-                    for(DataSnapshot details1 : da)
-                    Map<String,String> map = (Map)details.getValue();
-                    degree = map.get("Degree");
-                    fieldOfStudy = map.get("Field Of Study");
-                }*/
-            }
+                for(DataSnapshot details : dataSnapshot.getChildren()) {
+                    //for (DataSnapshot details1 : details.getChildren()) {
+                    Map<String, String> map = (Map) details.getValue();
+                    degree.add( map.get("Degree"));
+                    fieldOfStudy.add( map.get("Field Of Study"));
 
+                    //}
+                }
+                for (int i = 0;i<degree.size();i++){
+                    education.append(degree.get(i)+" in " +fieldOfStudy.get(i)+"\n");
+                }
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -161,7 +171,7 @@ public class ShowResume extends AppCompatActivity {
         });
     }
     public void retrieveExperienceDetails(){
-        databaseReference.child("users").child(uid).child("Experience").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("users").child(uid).child("Experience").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot details : dataSnapshot.getChildren()){
@@ -171,6 +181,10 @@ public class ShowResume extends AppCompatActivity {
                     j_title.add(map.get("Job Title"));
                     s_date.add(map.get("Start Date"));
                     e_date.add(map.get("End Date"));
+                    System.out.println(c_name);
+                }
+                for(int i =0;i<c_name.size();i++){
+                    experience.append(j_title.get(i)+"\n"+c_name.get(i)+"\n"+s_date.get(i)+" - "+e_date.get(i)+"\n");
                 }
             }
 
@@ -180,5 +194,19 @@ public class ShowResume extends AppCompatActivity {
             }
         });
     }
+    public void retrieveSkillDetails(){
+        databaseReference.child("users").child(uid).child("Skills").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Map<String, String> map = (Map) dataSnapshot.getValue();
+                for (int i = 1; i < dataSnapshot.getChildrenCount(); i++) {
+                    skill.append(map.get("Skill " + i) + "\n");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
 }

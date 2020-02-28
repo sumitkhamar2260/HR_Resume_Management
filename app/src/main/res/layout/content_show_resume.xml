@@ -100,7 +100,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="36dp"
             android:layout_marginBottom="8dp"
-            android:text="Education Details"
             android:textColor="#000000"
             android:textSize="20dp"></TextView>
     </com.google.android.material.card.MaterialCardView>
@@ -131,7 +130,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="36dp"
             android:layout_marginBottom="8dp"
-            android:text="Skill Details"
             android:textColor="#000000"
             android:textSize="20dp"></TextView>
     </com.google.android.material.card.MaterialCardView>
@@ -162,7 +160,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="36dp"
             android:layout_marginBottom="8dp"
-            android:text="Experience Details"
             android:textColor="#000000"
             android:textSize="20dp"></TextView>
 
@@ -171,9 +168,9 @@
 
     <Button
         android:id="@+id/download"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="download pdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download Resume"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -182,9 +179,9 @@
 
     <Button
         android:id="@+id/sendemail"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="Hire!!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Call for Interview"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
